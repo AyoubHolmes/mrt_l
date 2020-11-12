@@ -126,6 +126,7 @@ typedef struct s_p_shadow
 	t_vector color_shadow;
 	t_vector light_pos;
 	t_vector object_pos;
+	t_vector object_dir;
 	double	d_shadow;
 	t_objects *obj;
 	t_objects *p;
