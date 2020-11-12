@@ -23,12 +23,12 @@ double		interShadowFuncs(t_p_shadow  *t_shadow, t_objects *p, t_objects *lights)
 	t_ray r;
 
 	t = -1;
-	r.A = (t_shadow->newStart);
+	r.A = approCorrector(t_shadow->newStart);
 	l = lights;
 	while (l != NULL)
 	{
 		t_shadow->light_pos = (*(t_Light*)l->content).light_pos;
-		r.B = make_unit_vector((\
+		r.B = make_unit_vector(approCorrector(\
 			substract(t_shadow->light_pos, t_shadow->newStart)));
 		if (p->id == 4)
 			t = equationSphere(r, p, &t_shadow->d_shadow);
@@ -40,7 +40,7 @@ double		interShadowFuncs(t_p_shadow  *t_shadow, t_objects *p, t_objects *lights)
 			t = equationCylinder(r, p, &t_shadow->d_shadow).t;
 		else if (p->id == 8)
 			t = equationTriangle(r, p,&t_shadow->d_shadow);
-		if (t > 0 && t <= t_shadow->d_shadow )
+		if (t > 0)
 		{
 			t_shadow->object_pos = line_point(r, t);
 			return (t);
@@ -62,7 +62,7 @@ int shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color)
 		if (p != t_shadow->p)
 		{
 			t = interShadowFuncs(t_shadow, p, lights);
-			if (t > 0)
+			if (t > 0 && shadow_cheker(t_shadow->newStart, t_shadow->light_pos, t_shadow->object_pos))
 			{
 				shadowColor = multiple(0.5, multiple((double)1 / 255, t_shadow->color_shadow));
 				return (rgb_maker(color_clamping(shadowColor)));

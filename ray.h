@@ -7,6 +7,7 @@ typedef struct s_ray
     t_vector A;
     t_vector B;
     double  distance;
+    int     id;
 }t_ray;
 
 t_ray initialize_t_ray(t_vector A, t_vector B);
