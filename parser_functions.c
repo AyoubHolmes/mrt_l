@@ -29,6 +29,7 @@ void c_insertion(t_data *D, char **data)
 		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
 		D->obj = camInitializer(view_point, cam_normal, data[3]);
+        D->last_obj = D->obj;
     }
     else
     {
@@ -38,6 +39,7 @@ void c_insertion(t_data *D, char **data)
 		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
 		p->next = camInitializer(view_point, cam_normal, data[3]);
+        D->last_obj = p->next;
     }
 }
 
@@ -57,6 +59,7 @@ void l_insertion(t_data *D, char **data)
         if(!(D->obj->content = (t_Light*)malloc(sizeof(t_Light))))
             return ;
         D->obj = ligthInitializer(light_pos, light_color, data[2]);
+        D->last_obj = D->obj;
     }
     else
     {
@@ -68,6 +71,7 @@ void l_insertion(t_data *D, char **data)
         if(!(p->next->content = (t_Light*)malloc(sizeof(t_Light))))
             return ;
         p->next = ligthInitializer(light_pos, light_color, data[2]);
+         D->last_obj = p->next;
     }
 }
 
@@ -84,9 +88,8 @@ void sp_insertion(t_data *D, char **data)
         
 		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-        if(!(D->obj->content = (t_Sphere*)malloc(sizeof(t_Sphere))))
-            return ;
         D->obj= sphereInitialize(sphere_center, color_sphere, data[2]);
+        D->last_obj = D->obj;
     }
     else
     {
@@ -95,9 +98,8 @@ void sp_insertion(t_data *D, char **data)
             p = p->next;
 		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-        if(!(p->next->content = (t_Sphere*)malloc(sizeof(t_Sphere))))
-            return ;
         p->next = sphereInitialize(sphere_center, color_sphere, data[2]);
+        D->last_obj = p->next;
     }
 }
 
@@ -120,6 +122,7 @@ void pl_insertion(t_data *D, char **data)
         D->obj->content = planeInitialize(plane_center, plane_norm, color_plane);
 		D->obj->id = 5;
         D->obj->next = NULL;
+        D->last_obj = D->obj;
     }
     else
     {
@@ -133,6 +136,7 @@ void pl_insertion(t_data *D, char **data)
         p->next->content = planeInitialize(plane_center, plane_norm, color_plane);
 		p->next->id = 5;
         p->next->next = NULL;
+        D->last_obj = p->next;
     }
 }
  
@@ -157,6 +161,7 @@ void sq_insertion(t_data *D, char **data)
         D->obj->content = squareInitialize(square_center, square_norm, color_square, size);
 		D->obj->id = 6;
         D->obj->next = NULL;
+        D->last_obj = D->obj;
     }
     else
     {
@@ -170,6 +175,7 @@ void sq_insertion(t_data *D, char **data)
         p->next->content = squareInitialize(square_center, square_norm, color_square, size);
 		p->next->id = 6;
         p->next->next = NULL;
+        D->last_obj = p->next;
     }
 }
 
@@ -196,6 +202,7 @@ void cy_insertion(t_data *D, char **data)
         D->obj->content = cylinderInitialize(cylinder_center, cylinder_norm, cylinder_color, cylinder_diametre, cylinder_height);
 		D->obj->id = 7;
         D->obj->next = NULL;
+        D->last_obj = D->obj;
     }
     else
     {
@@ -209,6 +216,7 @@ void cy_insertion(t_data *D, char **data)
         p->next->content = cylinderInitialize(cylinder_center, cylinder_norm, cylinder_color, cylinder_diametre, cylinder_height);
 		p->next->id = 7;
         p->next->next = NULL;
+        D->last_obj = p->next;
     }
 }
 
@@ -233,6 +241,7 @@ void tr_insertion(t_data *D, char **data)
         D->obj->content = triangleInitialize(first_point, second_point, third_point, triangle_color);
 		D->obj->id = 8;
         D->obj->next = NULL;
+        D->last_obj = D->obj;
     }
     else
     {
@@ -246,5 +255,6 @@ void tr_insertion(t_data *D, char **data)
         p->next->content = triangleInitialize(first_point, second_point, third_point, triangle_color);
 		p->next->id = 8;
         p->next->next = NULL;
+        D->last_obj = p->next;
     }
 }

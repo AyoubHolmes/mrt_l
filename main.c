@@ -137,27 +137,30 @@ t_data parse(char *filename)
 	return (d);
 }
 
-int			main()
+int			main(int argc, char **argv)
 {
 	t_main	m;
 	t_err err;
 
-	err = file_checker("test.rt");
-	if (err.isChecked == 1)
+	if (argc == 2)
 	{
-		m.d = parse("test.rt");
-		m.w.mlx_ptr = mlx_init();
-		m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
-		m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
-		m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
-		graphicDrawer(m.d, m.w);
-		mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
-		mlx_loop(m.w.mlx_ptr);
-	}
-	else
-	{
-		errorPrinter(err);
-		exit(1);
+		err = file_checker(argv[1]);
+		if (err.isChecked == 1)
+		{
+			m.d = parse(argv[1]);
+			m.w.mlx_ptr = mlx_init();
+			m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
+			m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
+			m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
+			graphicDrawer(m.d, m.w);
+			mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
+			mlx_loop(m.w.mlx_ptr);
+		}
+		else
+		{
+			errorPrinter(err);
+			exit(1);
+		}
 	}
 	return (0);
 }

@@ -2,7 +2,13 @@
 
 int		data_id(char **data)
 {
-	if(data[0][0] == '#')
+	if(data[0][0] == 'r' && data[0][1] == 'o' && data[0][2] == 't' \
+	&& ft_strlen(data[0]) == 3)
+		return (-4);
+	else if(data[0][0] == 't' && data[0][1] == 'r' && data[0][2] == 's' \
+	&& ft_strlen(data[0]) == 3)
+		return (-3);
+	else if(data[0][0] == '#')
 		return (-2);
 	if(data[0][0] == 'R' && ft_strlen(data[0]) == 1)
 		return (0);
@@ -29,6 +35,10 @@ void	data_insertion(t_data *D, char **data)
 {
 	int i;
 	i = data_id(data);
+	 if (i == -4)
+		rotate(D, data);
+	if (i == -3)
+		translate(D, data);
 	if (i == 0)
 		R_insertion(D, data);
 	else if(i == 1)

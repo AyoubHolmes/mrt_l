@@ -7,6 +7,10 @@ int data_checker(char *line)
 	data = ft_split_whitespaces(line);
 	
 	i = data_id(data);
+	if (i == -4)
+		return (1);
+	if (i == -3)
+		return (1);
 	if (i == -2)
 		return (1);
     if (i == 0)

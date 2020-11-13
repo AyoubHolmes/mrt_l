@@ -111,6 +111,7 @@ typedef struct			s_data
 	t_camlist			*cameras;
 	t_objects			*lights;
 	t_objects			*obj;
+	t_objects			*last_obj;
 	int					pixel;
 }						t_data;
 
@@ -318,6 +319,17 @@ int	shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color);
 
 int colorCalculator(t_ray R, t_vector colorObj, double t, t_objects *lights, t_vector N);
 int	getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow, t_objects *lights);
+
+/*
+** -----------------------------------------
+*/
+
+/*
+**  ---------- Rot_Trans Functions ---------
+*/
+
+void rotate(t_data *D, char **data);
+void translate(t_data *D, char **data);
 
 /*
 ** -----------------------------------------
