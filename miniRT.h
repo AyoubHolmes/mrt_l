@@ -145,6 +145,21 @@ typedef struct s_err
 	int line;
 }t_err;
 
+typedef struct s_icam
+{
+	t_camera cam;
+	t_vector up;
+	t_vector u;
+	t_vector v;
+	t_vector w;
+	double aspect;
+	double theta;
+	double half_height;
+	double half_width;
+	t_vector v1;
+	t_vector v2;
+
+}t_icam;
 
 
 /*
@@ -162,7 +177,7 @@ void		fcam_add(t_camlist **alst, t_camlist *new);
 t_camlist	*fcam_last(t_camlist **alst);
 t_camlist	*get_cam_previous(t_camlist **alst);
 t_camlist	*get_cam_next(t_camlist **alst);
-t_camlist	*getCams(t_data d);
+t_camlist	*getcams(t_data d);
 t_ray			get_t_ray(t_data d, double u, double v);
 t_objects	*getLigths(t_objects *obj);
 /*
@@ -262,6 +277,7 @@ void		tr_insertion(t_data *D, char **data);
 /*
 ** -------------------------------------------------------
 */
+
 /*
 **  ------------- Color Functions ----------
 */
@@ -317,7 +333,7 @@ int	shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color);
 **  ---------- Executers Functions ---------
 */
 
-int colorCalculator(t_ray R, t_vector colorObj, double t, t_objects *lights, t_vector N);
+int colorCalculator(t_ray R, double t, t_objects *lights, t_vector N);
 int	getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow, t_objects *lights);
 
 /*

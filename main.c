@@ -130,7 +130,7 @@ t_data parse(char *filename)
 
 	d = file_parser(filename);
 	objectsDebugger(d);
-	d.cameras = getCams(d);
+	d.cameras = getcams(d);
 	d.lights = getLigths(d.obj);
 	/*if (d.lights == 0 || d.cameras == 0 || d.obj == 0)
 		return (0);*/
