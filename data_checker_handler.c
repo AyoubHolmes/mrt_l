@@ -6,7 +6,7 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 10:14:05 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/19 11:11:26 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:00:20 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int			data_checker_helper1(char *line, int i)
 	if (i == -2)
 		return (1);
 	if (i == 0)
-		return (R_checker(line));
+		return (r_checker(line));
 	else if (i == 1)
-		return (A_checker(line));
+		return (a_checker(line));
 	else if (i == 2)
 		return (c_checker(line));
 	else if (i == 3)
