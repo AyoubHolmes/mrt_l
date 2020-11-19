@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   bmp.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/14 11:45:18 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/19 10:10:08 by aboulbaz         ###   ########.fr       */
+/*   Created: 2020/11/19 10:04:26 by aboulbaz          #+#    #+#             */
+/*   Updated: 2020/11/19 10:05:56 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
-# include "vector.h"
-# include "ray.h"
+#ifndef BMP_H
+# define BMP_H
+# include "miniRT.h"
+# pragma pack(push, 1)
 
-typedef struct		s_camera
+typedef struct	s_bmp
 {
-	t_vector		start_point;
-	t_vector		horizontal;
-	t_vector		vertical;
-	t_vector		origine;
-}					t_camera;
+	char		id[2];
+	int			file_size;
+	int			unused;
+	int			offset;
+	int			dib;
+	int			width;
+	int			height;
+	char		plane[2];
+	char		bpp[2];
+	int			compression;
+	int			raw_bitmap_size;
+	int			resx;
+	int			resy;
+	int			number_of_colors;
+	int			important_colors;
+}				t_bmp;
 
+# pragma pack(pop)
 #endif

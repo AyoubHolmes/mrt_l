@@ -13,6 +13,7 @@
         "iterator": "c",
         "__locale": "c",
         "locale": "c",
-        "minirt.h": "c"
+        "minirt.h": "c",
+        "__config": "c"
     }
 }

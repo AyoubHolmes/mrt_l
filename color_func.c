@@ -6,13 +6,15 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 12:54:17 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/14 13:09:45 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/19 10:14:00 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// TO RECHECK 
+
 #include "miniRT.h"
 
-t_vector	color_diffuse(t_vector color_sphere, t_vector light_color, t_vector L, t_vector N, double brighness)
+t_vector		color_diffuse(t_vector color_sphere, t_vector light_color, t_vector L, t_vector N, double brighness)
 {
 	t_vector	color;
 	double		l;
@@ -25,8 +27,8 @@ t_vector	color_diffuse(t_vector color_sphere, t_vector light_color, t_vector L, 
 	return (color);
 }
 
-t_vector	color_spec(t_vector light_color,\
-			t_vector r, t_vector v, double brighness)
+t_vector		color_spec(t_vector light_color,\
+				t_vector r, t_vector v, double brighness)
 {
 	t_vector	color;
 	double		l;
@@ -41,13 +43,13 @@ t_vector	color_spec(t_vector light_color,\
 	return (color);
 }
 
-int			rgb_maker(t_vector rgb)
+int				rgb_maker(t_vector rgb)
 {
 	return (((int)(rgb.x * 255.99) << 16) + \
 		((int)(rgb.y * 255.99) << 8) + (int)(rgb.z * 255.99));
 }
 
-t_vector	color_clamping(t_vector color)
+t_vector		color_clamping(t_vector color)
 {
 	color.x = (color.x < 1) ? color.x : 1;
 	color.x = (color.x >= 0) ? color.x : 0;

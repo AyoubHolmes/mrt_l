@@ -40,6 +40,7 @@ void c_insertion(t_data *D, char **data)
 			return ;
 		p->next = camInitializer(view_point, cam_normal, data[3]);
         D->last_obj = p->next;
+
     }
 }
 
@@ -71,7 +72,8 @@ void l_insertion(t_data *D, char **data)
         if(!(p->next->content = (t_Light*)malloc(sizeof(t_Light))))
             return ;
         p->next = ligthInitializer(light_pos, light_color, data[2]);
-         D->last_obj = p->next;
+        D->last_obj = p->next;
+
     }
 }
 
@@ -100,6 +102,7 @@ void sp_insertion(t_data *D, char **data)
 			return ;
         p->next = sphereInitialize(sphere_center, color_sphere, data[2]);
         D->last_obj = p->next;
+
     }
 }
 
@@ -137,6 +140,7 @@ void pl_insertion(t_data *D, char **data)
 		p->next->id = 5;
         p->next->next = NULL;
         D->last_obj = p->next;
+
     }
 }
  
@@ -176,6 +180,7 @@ void sq_insertion(t_data *D, char **data)
 		p->next->id = 6;
         p->next->next = NULL;
         D->last_obj = p->next;
+
     }
 }
 
@@ -217,6 +222,7 @@ void cy_insertion(t_data *D, char **data)
 		p->next->id = 7;
         p->next->next = NULL;
         D->last_obj = p->next;
+
     }
 }
 
@@ -256,5 +262,6 @@ void tr_insertion(t_data *D, char **data)
 		p->next->id = 8;
         p->next->next = NULL;
         D->last_obj = p->next;
+
     }
 }

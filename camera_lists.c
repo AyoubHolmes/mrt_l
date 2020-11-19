@@ -6,13 +6,13 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 09:44:51 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/14 10:02:25 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/19 10:06:33 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void		getcamhelper(t_data d, t_objects **obj, t_camlist **liste)
+void			getcamhelper(t_data d, t_objects **obj, t_camlist **liste)
 {
 	*obj = d.obj;
 	while (obj != NULL)
@@ -25,7 +25,7 @@ void		getcamhelper(t_data d, t_objects **obj, t_camlist **liste)
 	(*obj) = (*obj)->next;
 }
 
-t_camlist	*getcams(t_data d)
+t_camlist		*getcams(t_data d)
 {
 	t_objects	*obj;
 	t_camlist	*liste;

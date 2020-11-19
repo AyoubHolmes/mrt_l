@@ -7,6 +7,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include "camera.h"
+#include "bmp.h"
 # define BUFFER_SIZE 100
 
 /*
@@ -137,6 +138,7 @@ typedef struct s_main
 {
 	t_data d;
 	t_window w;
+	int isSave;
 }t_main;
 
 typedef struct s_err
@@ -180,6 +182,20 @@ t_camlist	*get_cam_next(t_camlist **alst);
 t_camlist	*getcams(t_data d);
 t_ray			get_t_ray(t_data d, double u, double v);
 t_objects	*getLigths(t_objects *obj);
+
+/*
+** -------------------------------------------------------
+*/
+
+/*
+** --------------- HELPING FUNCTION ----------------------
+*/
+
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void             save_bmp_image(t_main   move);
+t_bmp   init_bmph(t_main move);
 /*
 ** -------------------------------------------------------
 */

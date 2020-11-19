@@ -6,13 +6,13 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 09:47:37 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/14 11:24:26 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/19 10:09:42 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_camera	initialize_camera(void)
+t_camera		initialize_camera(void)
 {
 	t_camera	cam;
 
@@ -23,7 +23,7 @@ t_camera	initialize_camera(void)
 	return (cam);
 }
 
-t_camera	initialize_camera1(double fov, double aspect)
+t_camera		initialize_camera1(double fov, double aspect)
 {
 	t_camera	cam;
 	double		theta;
@@ -40,7 +40,8 @@ t_camera	initialize_camera1(double fov, double aspect)
 	return (cam);
 }
 
-t_camera	icam(t_vector *vecs, double fov, int xresolution, int yresolution)
+t_camera		icam(t_vector *vecs, double fov, \
+					int xresolution, int yresolution)
 {
 	t_icam		calc;
 	t_camera	cam;
@@ -62,7 +63,7 @@ t_camera	icam(t_vector *vecs, double fov, int xresolution, int yresolution)
 	return (cam);
 }
 
-t_ray		get_t_ray(t_data d, double u, double v)
+t_ray			get_t_ray(t_data d, double u, double v)
 {
 	t_camera	cam;
 	t_vector	vecs[2];
