@@ -163,6 +163,15 @@ typedef struct s_icam
 
 }t_icam;
 
+typedef struct s_cy_init
+{
+	char **cylinder_center;
+	char **cylinder_norm;
+	char **color_cylinder;
+	char *cylinder_diametre;
+	char *cylinder_height;
+}t_cy_init;
+
 
 /*
 ** ----------------------------
@@ -204,13 +213,13 @@ t_bmp   init_bmph(t_main move);
 ** --------------- INITIALIZER FUNCTION ------------------
 */
 
-t_objects *camInitializer(char **vp, char **cn, char *fov);
-t_objects *ligthInitializer(char **lp, char **lc, char *brightness);
-t_objects *sphereInitialize(char **sc, char **color_sphere, char *sphere_diametre);
-t_Plane *planeInitialize(char **plane_center, char **plane_norm, char **color_plane);
-t_Square *squareInitialize(char **square_center, char **square_norm, char **color_square, char *size);
-t_Cylinder *cylinderInitialize(char **cylinder_center, char **cylinder_norm, char **color_cylinder, char *cylinder_diametre, char *cylinder_height);
-t_Triangle *triangleInitialize(char **first_point, char **second_point, char **third_point, char **triangle_color);
+t_objects *cam_initializer(char **vp, char **cn, char *fov);
+t_objects *ligth_initializer(char **lp, char **lc, char *brightness);
+t_objects *sphere_initialize(char **sc, char **color_sphere, char *sphere_diametre);
+t_objects *plane_initialize(char **plane_center, char **plane_norm, char **color_plane);
+t_objects *square_initialize(char **square_center, char **square_norm, char **color_square, char *size);
+t_objects *cylinder_initialize(t_cy_init cy_init);
+t_objects *triangle_initialize(char **first_point, char **second_point, char **third_point, char **triangle_color);
 
 /*
 ** -------------------------------------------------------

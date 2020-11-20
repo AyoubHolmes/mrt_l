@@ -62,7 +62,8 @@ double equationSquare(t_ray R, t_objects *obj,double *distance)
 		t = -y / x;
 		t_vector v = line_point(R, t);
 		oc = substract(sq->square_center, v);
-		if (fabs(oc.x)<= (double)(sq->size / 2) && fabs(oc.y)<= (double)(sq->size / 2) && fabs(oc.z)<= (double)(sq->size / 2)&& t <= *distance && t > 0)
+		if (fabs(oc.x)<= (double)(sq->size / 2) && fabs(oc.y)<= (double)(sq->size / 2) \
+			&& fabs(oc.z)<= (double)(sq->size / 2)&& t <= *distance && t > 0)
 		{
 			if (R.id == 0)
 				*distance = t;

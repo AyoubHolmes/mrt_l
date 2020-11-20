@@ -6,7 +6,7 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 10:02:56 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/19 10:02:57 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/20 12:17:58 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void    errorPrinterHelper2(int id)
 
 void errorPrinter(t_err err)
 {
-    ft_putstr_fd("ERROR at line :", 2);
-    ft_putnbr_fd(err.line, 2);
-    ft_putstr_fd(" ", 2);
+    ft_putstr_fd("ERROR\n", 2);
     if (err.isChecked >= -11)
         errorPrinterHelper1(err.isChecked);
     else
         errorPrinterHelper2(err.isChecked);
+    ft_putstr_fd(" at line: ", 2);
+    ft_putnbr_fd(err.line, 2);
     exit (1);
 }

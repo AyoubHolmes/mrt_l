@@ -28,7 +28,7 @@ void c_insertion(t_data *D, char **data)
     {
 		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-		D->obj = camInitializer(view_point, cam_normal, data[3]);
+		D->obj = cam_initializer(view_point, cam_normal, data[3]);
         D->last_obj = D->obj;
     }
     else
@@ -38,7 +38,7 @@ void c_insertion(t_data *D, char **data)
             p = p->next;
 		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-		p->next = camInitializer(view_point, cam_normal, data[3]);
+		p->next = cam_initializer(view_point, cam_normal, data[3]);
         D->last_obj = p->next;
 
     }
@@ -59,7 +59,7 @@ void l_insertion(t_data *D, char **data)
 			return ;
         if(!(D->obj->content = (t_Light*)malloc(sizeof(t_Light))))
             return ;
-        D->obj = ligthInitializer(light_pos, light_color, data[2]);
+        D->obj = ligth_initializer(light_pos, light_color, data[2]);
         D->last_obj = D->obj;
     }
     else
@@ -71,7 +71,7 @@ void l_insertion(t_data *D, char **data)
 			return ;
         if(!(p->next->content = (t_Light*)malloc(sizeof(t_Light))))
             return ;
-        p->next = ligthInitializer(light_pos, light_color, data[2]);
+        p->next = ligth_initializer(light_pos, light_color, data[2]);
         D->last_obj = p->next;
 
     }
@@ -90,7 +90,7 @@ void sp_insertion(t_data *D, char **data)
         
 		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-        D->obj= sphereInitialize(sphere_center, color_sphere, data[2]);
+        D->obj= sphere_initialize(sphere_center, color_sphere, data[2]);
         D->last_obj = D->obj;
     }
     else
@@ -100,7 +100,7 @@ void sp_insertion(t_data *D, char **data)
             p = p->next;
 		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
 			return ;
-        p->next = sphereInitialize(sphere_center, color_sphere, data[2]);
+        p->next = sphere_initialize(sphere_center, color_sphere, data[2]);
         D->last_obj = p->next;
 
     }
@@ -108,7 +108,7 @@ void sp_insertion(t_data *D, char **data)
 
 void pl_insertion(t_data *D, char **data)
 {
-	char **plane_center;
+    char **plane_center;
 	char **plane_norm;
 	char **color_plane;
 	t_objects *p;
@@ -118,13 +118,9 @@ void pl_insertion(t_data *D, char **data)
 	color_plane = ft_split(data[3], ',');
     if (!D->obj)
     {
-        if(!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(D->obj->content = (t_Plane*)malloc(sizeof(t_Plane))))
-            return ;
-        D->obj->content = planeInitialize(plane_center, plane_norm, color_plane);
-		D->obj->id = 5;
-        D->obj->next = NULL;
+		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        D->obj= plane_initialize(plane_center, plane_norm, color_plane);
         D->last_obj = D->obj;
     }
     else
@@ -132,39 +128,27 @@ void pl_insertion(t_data *D, char **data)
         p = D->obj;
         while (p->next != NULL)
             p = p->next;
-        if(!(p->next = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(p->next->content = (t_Plane*)malloc(sizeof(t_Plane))))
-            return ;
-        p->next->content = planeInitialize(plane_center, plane_norm, color_plane);
-		p->next->id = 5;
-        p->next->next = NULL;
+		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        p->next= plane_initialize(plane_center, plane_norm, color_plane);
         D->last_obj = p->next;
-
     }
 }
- 
 void sq_insertion(t_data *D, char **data)
 {
-	char **square_center;
+    char **square_center;
 	char **square_norm;
 	char **color_square;
-    char *size;
 	t_objects *p;
 
 	square_center = ft_split(data[1], ',');
 	square_norm = ft_split(data[2], ',');
-    size = data[3];
 	color_square = ft_split(data[4], ',');
     if (!D->obj)
     {
-        if(!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(D->obj->content = (t_Square*)malloc(sizeof(t_Square))))
-            return ;
-        D->obj->content = squareInitialize(square_center, square_norm, color_square, size);
-		D->obj->id = 6;
-        D->obj->next = NULL;
+		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        D->obj= square_initialize(square_center, square_norm, color_square, data[3]);
         D->last_obj = D->obj;
     }
     else
@@ -172,41 +156,28 @@ void sq_insertion(t_data *D, char **data)
         p = D->obj;
         while (p->next != NULL)
             p = p->next;
-        if(!(p->next = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(p->next->content = (t_Square*)malloc(sizeof(t_Square))))
-            return ;
-        p->next->content = squareInitialize(square_center, square_norm, color_square, size);
-		p->next->id = 6;
-        p->next->next = NULL;
+		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        p->next= square_initialize(square_center, square_norm, color_square, data[3]);
         D->last_obj = p->next;
-
     }
 }
 
 void cy_insertion(t_data *D, char **data)
 {
-	char **cylinder_center;
-	char **cylinder_norm;
-	char **cylinder_color;
-    char *cylinder_diametre;
-    char *cylinder_height;
+    t_cy_init cy_init;
 	t_objects *p;
 
-	cylinder_center = ft_split(data[1], ',');
-	cylinder_norm = ft_split(data[2], ',');
-    cylinder_diametre = data[4];
-    cylinder_height = data[5];
-	cylinder_color = ft_split(data[3], ',');
+	cy_init.cylinder_center = ft_split(data[1], ',');
+	cy_init.cylinder_norm = ft_split(data[2], ',');
+    cy_init.cylinder_diametre = data[4];
+    cy_init.cylinder_height = data[5];
+	cy_init.color_cylinder = ft_split(data[3], ',');
     if (!D->obj)
     {
-        if(!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(D->obj->content = (t_Cylinder*)malloc(sizeof(t_Cylinder))))
-            return ;
-        D->obj->content = cylinderInitialize(cylinder_center, cylinder_norm, cylinder_color, cylinder_diametre, cylinder_height);
-		D->obj->id = 7;
-        D->obj->next = NULL;
+		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        D->obj= cylinder_initialize(cy_init);
         D->last_obj = D->obj;
     }
     else
@@ -214,21 +185,16 @@ void cy_insertion(t_data *D, char **data)
         p = D->obj;
         while (p->next != NULL)
             p = p->next;
-        if(!(p->next = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(p->next->content = (t_Cylinder*)malloc(sizeof(t_Cylinder))))
-            return ;
-        p->next->content = cylinderInitialize(cylinder_center, cylinder_norm, cylinder_color, cylinder_diametre, cylinder_height);
-		p->next->id = 7;
-        p->next->next = NULL;
+		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        p->next= cylinder_initialize(cy_init);
         D->last_obj = p->next;
-
     }
 }
 
 void tr_insertion(t_data *D, char **data)
 {
-	char **first_point;
+    char **first_point;
 	char **second_point;
 	char **third_point;
     char **triangle_color;
@@ -240,13 +206,9 @@ void tr_insertion(t_data *D, char **data)
     triangle_color = ft_split(data[4], ',');
     if (!D->obj)
     {
-        if(!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(D->obj->content = (t_Cylinder*)malloc(sizeof(t_Cylinder))))
-            return ;
-        D->obj->content = triangleInitialize(first_point, second_point, third_point, triangle_color);
-		D->obj->id = 8;
-        D->obj->next = NULL;
+		if (!(D->obj = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        D->obj= triangle_initialize(first_point, second_point, third_point, triangle_color);
         D->last_obj = D->obj;
     }
     else
@@ -254,14 +216,9 @@ void tr_insertion(t_data *D, char **data)
         p = D->obj;
         while (p->next != NULL)
             p = p->next;
-        if(!(p->next = (t_objects*)malloc(sizeof(t_objects))))
-            return ;
-		if(!(p->next->content = (t_Cylinder*)malloc(sizeof(t_Cylinder))))
-            return ;
-        p->next->content = triangleInitialize(first_point, second_point, third_point, triangle_color);
-		p->next->id = 8;
-        p->next->next = NULL;
+		if (!(p->next = (t_objects*)malloc(sizeof(t_objects))))
+			return ;
+        p->next= triangle_initialize(first_point, second_point, third_point, triangle_color);
         D->last_obj = p->next;
-
     }
 }
