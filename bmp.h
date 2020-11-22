@@ -36,3 +36,8 @@ typedef struct	s_bmp
 
 # pragma pack(pop)
 #endif
+/*
+	git config --globale user.email "your email"
+	git config --globale user.name "your name"
+	git push origin ..
+*/

@@ -1,13 +1,13 @@
 #include "miniRT.h"
 
-int			shadow_cheker(t_vector a, t_vector b, t_vector c)
+int			shadow_checker(t_p_shadow *t_shadow)
 {
 	double A;
 	double B;
 
 
-	A = length(substract(b, a));
-	B = length(substract(c, a));
+	A = length(substract(t_shadow->light_pos, t_shadow->newStart));
+	B = length(substract(t_shadow->object_pos, t_shadow->newStart));
 	return (A >= B);
 }
 
@@ -25,7 +25,6 @@ double		interShadowFuncs(t_p_shadow  *t_shadow, t_objects *p, t_objects *lights)
 	t = -1;
 	t_shadow->newStart = add(t_shadow->newStart, multiple(1e-4f, t_shadow->object_dir));
 	r.A = approCorrector(t_shadow->newStart);
-	//addition(obj->light_n->light,multiplication(1e-4f,obj->light_n->normal));
 	l = lights;
 	while (l != NULL)
 	{
@@ -56,18 +55,23 @@ int shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color)
 {
 	t_vector shadowColor;
 	t_objects *p;
+	int colorInit;
 	double	t;
+	int i;
 
+	t_shadow->d_shadow = INT_MAX;
 	p = t_shadow->obj;
+	i = 0;
+	colorInit = color;
 	while (p != NULL)
 	{
 		if (p != t_shadow->p)
 		{
 			t = interShadowFuncs(t_shadow, p, lights);
-			if (t >= 0 && shadow_cheker(t_shadow->newStart, t_shadow->light_pos, t_shadow->object_pos))
+			if (t >= 0 && shadow_checker(t_shadow))
 			{
 				shadowColor = multiple(0.5, multiple((double)1 / 255, t_shadow->color_shadow));
-				return (rgb_maker(color_clamping(shadowColor)));
+				color = (rgb_maker(color_clamping(shadowColor)));
 			}
 		}
 		p = p->next;

@@ -27,7 +27,7 @@ int			getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow,
 
 	color = 0;
 	*distance = INT_MAX;
-	t_shadow.d_shadow = INT_MAX;
+	//t_shadow.d_shadow = INT_MAX;
 	p = obj;
 	t_shadow.obj = obj;
     while (p != NULL)

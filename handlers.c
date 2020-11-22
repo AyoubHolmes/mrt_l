@@ -14,6 +14,7 @@ int sphereHandler(t_ray r, t_objects *p, double *distance, double *t, t_objects 
 		t_shadow->color_shadow = (*(t_Sphere*)p->content).color_sphere;
 		t_shadow->object_dir = N;
 		r.color_obj = t_shadow->color_shadow;
+		t_shadow->p = p;
 		color = colorCalculator(r, *t, lights, N);
 		r.id = 1;
 		color = shadowHandler(t_shadow, lights, color);
@@ -36,6 +37,7 @@ int planeHandler(t_ray r, t_objects *p, double *distance, double *t, t_objects *
     	if (scalar(r.B, pl.plane_norm) > 0)
 			pl.plane_norm = multiple(-1, pl.plane_norm);
 		r.color_obj = t_shadow->color_shadow;
+		t_shadow->p = p;
 		color = colorCalculator(r, *t, lights, pl.plane_norm);
 		r.id = 1;
 		color = shadowHandler(t_shadow, lights, color);
@@ -58,6 +60,7 @@ int squareHandler(t_ray r, t_objects *p, double *distance, double *t, t_objects 
 		if (scalar(r.B, sq.square_norm) > 0)
 			sq.square_norm = multiple(-1, sq.square_norm);
 		r.color_obj = t_shadow->color_shadow;
+		t_shadow->p = p;
 		color = colorCalculator(r, *t, lights, sq.square_norm);
 		r.id = 1;
 		color = shadowHandler(t_shadow, lights, color);
@@ -80,6 +83,7 @@ int cylinderHandler(t_ray r, t_objects *p, double *distance, double *t, t_object
 		t_shadow->color_shadow = cy.cylinder_color;
 		t_shadow->object_dir = cy.cylinder_norm;
 		r.color_obj = t_shadow->color_shadow;
+		t_shadow->p = p;
 		color = colorCalculator(r, *t, lights, pass.N);
 		r.id = 1;
 		color = shadowHandler(t_shadow, lights, color);
@@ -108,6 +112,7 @@ int triangleHandler(t_ray r, t_objects *p, double *distance, double *t, t_object
 			V = multiple(-1, V);
 		t_shadow->object_dir = V;
 		r.color_obj = t_shadow->color_shadow;
+		t_shadow->p = p;
 		color = colorCalculator(r, *t, lights, V);
 		r.id = 1;
 		color = shadowHandler(t_shadow, lights, color);
