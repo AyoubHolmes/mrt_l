@@ -76,13 +76,14 @@ all: $(NAME)
 
 $(NAME): $(FUNCTIONS_O)
 	ar rc $(NAME) ${FUNCTIONS_O}
-	mv ./srcs/*.o objects
-	mv ./parsing/*.o objects
+	@mv ./srcs/*.o objects
+	@mv ./parsing/*.o objects
+	@gcc -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGl -framework AppKit miniRt.a -o miniRT
 
 clean:
-	rm -rf ./objects/*.o
+	@rm -rf ./objects/*.o
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
