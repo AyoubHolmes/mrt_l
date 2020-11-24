@@ -134,6 +134,7 @@ typedef struct s_p_shadow
 	double	d_shadow;
 	t_objects *obj;
 	t_objects *p;
+	t_vector cam_dir;
 }t_p_shadow;
 
 typedef struct s_main

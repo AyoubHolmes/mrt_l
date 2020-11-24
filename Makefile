@@ -33,57 +33,26 @@ FUNCTIONS = ./srcs/camera.c \
 			./parsing/get_next_line_utils.c \
 			./parsing/parser_functions.c
 
-FUNCTIONS_O = ./srcs/camera.o \
-			./srcs/camera_lists.o \
-			./srcs/equations.o \
-			./srcs/color_func.o \
-			./srcs/executers.o \
-			./srcs/geters.o \
-			./srcs/handlers.o \
-			./srcs/main.o \
-			./srcs/ray.o \
-			./srcs/rot_trs.o \
-			./srcs/save.o \
-			./srcs/shadow_handlers.o \
-			./srcs/vector.o\
-			./parsing/checkers.o \
-			./parsing/checkers2.o \
-			./parsing/data_checker_handler.o \
-			./parsing/data_checkers.o \
-			./parsing/data_checkers2.o \
-			./parsing/data_initializer.o \
-			./parsing/data_initializer2.o \
-			./parsing/data_insertion_handler.o \
-			./parsing/debuggers.o \
-			./parsing/error_printer.o \
-			./parsing/ft_lstfuncs.o \
-			./parsing/ft_putchar_fd.o \
-			./parsing/ft_putnbr_fd.o \
-			./parsing/ft_putstr_fd.o \
-			./parsing/ft_split.o \
-			./parsing/ft_strncmp.o \
-			./parsing/ft_white_spaces.o \
-			./parsing/get_next_line.o \
-			./parsing/get_next_line_utils.o \
-			./parsing/parser_functions.o
+FUNCTIONS_O = $(FUNCTIONS:.c=.o)
 
 
 HEADERS = ./includes/
 
 CC = gcc -I ${HEADERS}
 
+$(NAME): $(HEADERS) $(FUNCTIONS_O)
+	ar rc $(NAME) ${FUNCTIONS_O}
+	@gcc -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGl -framework AppKit miniRt.a -o miniRT
+	@clear
 all: $(NAME)
 
-$(NAME): $(FUNCTIONS_O)
-	ar rc $(NAME) ${FUNCTIONS_O}
-	@mv ./srcs/*.o objects
-	@mv ./parsing/*.o objects
-	@gcc -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGl -framework AppKit miniRt.a -o miniRT
 
 clean:
-	@rm -rf ./objects/*.o
+	@rm -rf ./parsing/*.o
+	@rm -rf ./srcs/*.o
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm miniRT
 
 re: fclean all

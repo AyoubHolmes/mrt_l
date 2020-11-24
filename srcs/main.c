@@ -6,7 +6,7 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 09:57:49 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/19 12:00:20 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/23 20:17:24 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_objects *getLigths(t_objects *obj)
 		}
 		p = p->next;
 	}
+	free(p);
+	free(q);
 	return (lst);
 }
 
@@ -53,13 +55,14 @@ t_err		file_checker(char *file)
         rest = get_next_line(fd, &line);
         if (line[0] == '\0')
 		{
-
+			free(line);
             continue;
 		}
 		err.line++;
 		err.isChecked = data_checker(line);
 		if (err.isChecked != 1)
 			return (err);
+		free(line);
     }
     close(fd);
 	err.isChecked = 1;
@@ -82,11 +85,12 @@ t_data		file_parser(char *file)
         rest = get_next_line(fd, &line);
         if (line[0] == '\0')
 		{
-
+			free(line);
             continue;
 		}
         data = ft_split_whitespaces(line);
 		data_insertion(&d, data);
+		free(line);
     }
     close(fd);
     return (d);

@@ -20,7 +20,6 @@ int			getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow,
 	int			color;
 	t_vector	colorShadow;
     t_objects	*p;
-	t_objects	*p2;
 	double		t;
 	double		t2;
 	t_p_shadow	t_shadow;
@@ -30,6 +29,7 @@ int			getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow,
 	t_shadow.d_shadow = INT_MAX;
 	p = obj;
 	t_shadow.obj = obj;
+	t_shadow.cam_dir = r.B;
     while (p != NULL)
     {
 		t_shadow.p = p;

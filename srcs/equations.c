@@ -9,7 +9,6 @@ double equationSphere(t_ray R, t_objects *obj, double *distance)
 	double c = scalar(oc, oc) - ((double)(sp->sphere_diametre / 2) * (double)(sp->sphere_diametre / 2));
 	double dis = (b * b) - 4 * a * c;
 	double t;
-
 	oc = substract(R.A, sp->sphere_center);
 	a = scalar(R.B, R.B);
 	if (dis < 0)
@@ -54,23 +53,15 @@ double equationSquare(t_ray R, t_objects *obj,double *distance)
 {
 	t_Square *sq = ((t_Square*)obj->content);
 	t_vector oc = substract(R.A, sq->square_center);
-	sq->square_norm = make_unit_vector(sq->square_norm);
-	double x = (scalar(R.B, (sq->square_norm)));
-	double y = (scalar(oc, (sq->square_norm)));
+	double x = scalar(R.B, make_unit_vector(sq->square_norm));
+	double y = scalar(oc, make_unit_vector(sq->square_norm));
 	double t;
-	double	u_distance;
-    double	v_distance;
-	t_vector u;
-	t_vector v;
-	if (x != 0)
+	if (fabs(x) > 0)
 	{
 		t = -y / x;
-		oc = substract(line_point(R, t), sq->square_center);
-		u = make_unit_vector(v_product((t_vector){0, 1, 0}, (sq->square_norm)));
-		v = make_unit_vector(v_product((sq->square_norm), u));
-		u_distance = (double)(scalar(oc, u) / (double)(sq->size / 2));
-		v_distance = (double)(scalar(oc, v) / (double)(sq->size / 2));	
-		if (fabs(u_distance) <= 1 && fabs(v_distance) <= 1 && t <= *distance && t >= 0)
+		t_vector v = line_point(R, t);
+		oc = substract(sq->square_center, v);
+		if (fabs(oc.x)<= (double)(sq->size / 2) && fabs(oc.y)<= (double)(sq->size / 2) && fabs(oc.z)<= (double)(sq->size / 2)&& t <= *distance && t > 0)
 		{
 			if (R.id == 0)
 				*distance = t;
