@@ -363,6 +363,7 @@ int	shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color);
 
 int colorCalculator(t_ray R, double t, t_objects *lights, t_vector N);
 int	getPixelColor(t_objects *obj, t_ray r, double *distance, double *d_shadow, t_objects *lights);
+int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 
 /*
 ** -----------------------------------------

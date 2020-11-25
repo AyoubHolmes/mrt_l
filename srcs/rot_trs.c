@@ -1,43 +1,39 @@
 #include "miniRT.h"
 
-t_vector rotX(t_vector toRot, double theta)
-{
-	t_vector vec;
 
- 	theta = theta * M_PI / 180.0;
-	vec.y = toRot.y * cos(theta) - toRot.z * sin(theta);
-	vec.z = toRot.y * sin(theta) + toRot.z * cos(theta);
-	vec.x= toRot.x;
-	return (vec);
+t_vector    rot_x(t_vector vec, double teta)
+{
+    double tmp;
+    tmp = vec.y;
+	teta = teta * M_PI / 180.0;
+    vec.y = (vec.y * cos(teta)) - (vec.z * sin(teta));
+    vec.z = tmp * sin(teta) + (vec.z * cos(teta));
+    return (vec);
 }
-
-t_vector rotY(t_vector toRot, double theta)
+t_vector    rot_y(t_vector vec, double teta)
 {
-	t_vector vec;
-
-	theta = theta * M_PI / 180.0;
-	vec.z = toRot.z * cos(theta) - toRot.x * sin(theta);
-	vec.x = toRot.z * sin(theta) + toRot.x * cos(theta);
-	vec.y = toRot.y;
-	return (vec);
+    double tmp;
+    tmp = vec.z;
+	teta = teta * M_PI / 180.0;
+    vec.z = (vec.z * cos(teta)) - (vec.x * sin(teta));
+    vec.x = tmp * sin(teta) + (vec.x * cos(teta));
+    return (vec);
 }
-
-t_vector rotZ(t_vector toRot, double theta)
+t_vector    rot_z(t_vector vec, double teta)
 {
-	t_vector vec;
-
-	theta = theta * M_PI / 180.0;
-	vec.x = toRot.x * cos(theta) - toRot.y * sin(theta);
-	vec.y = toRot.x * sin(theta) + toRot.y * cos(theta);
-	vec.z = vec.z;
-	return (vec);
+    double tmp;
+    tmp = vec.x;
+	teta = teta * M_PI / 180.0;
+    vec.x = (vec.x * cos(teta)) - (vec.y * sin(teta));
+    vec.y = tmp * sin(teta) + (vec.y * cos(teta));
+    return (vec);
 }
 
 t_vector rotatevect(t_vector toRot, t_vector rotVec)
 {
-	toRot = rotX(toRot, rotVec.x);
-	toRot = rotY(toRot, rotVec.y);
-	toRot = rotZ(toRot, rotVec.z);
+	toRot = rot_x(toRot, rotVec.x);
+	toRot = rot_y(toRot, rotVec.y);
+	toRot = rot_z(toRot, rotVec.z);
 	return (toRot);
 }
 

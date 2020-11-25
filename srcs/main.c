@@ -6,7 +6,7 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 09:57:49 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/23 20:17:24 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:32:12 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,10 @@ int key_press(int keycode, t_main *m)
 	{
 		m->d.cameras = get_cam_previous(&m->d.cameras);
 		graphicDrawer(m);
-		printf("test here 1 \n");
 	}
 	if (keycode == 124)
 	{
 		m->d.cameras = get_cam_next(&m->d.cameras);
-		printf("test here 2 \n");
 		graphicDrawer(m);
 	}
 	return (0);
@@ -161,22 +159,29 @@ int			main(int argc, char **argv)
 {
 	t_main	m;
 	t_err err;
+	int	a;
+	int b;
 
-	if (argc == 2 || argc == 3)
+	m.w.mlx_ptr = mlx_init();
+	mlx_get_screen_size(m.w.mlx_ptr, &a, &b);
+	
+	if (argc == 2 || argc == 3 )
 	{
 		err = file_checker(argv[1]);
 		if (err.isChecked == 1)
 		{
 			m.d = parse(argv, &m, argc);
-			m.w.mlx_ptr = mlx_init();
-			m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
-			m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
-			m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
-			graphicDrawer(&m);
-			if (m.isSave == 0)
+			if ((m.d.R.x >= 0 && m.d.R.x <= a)&& (m.d.R.y >= 0 && m.d.R.y <= b))
 			{
-				mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
-				mlx_loop(m.w.mlx_ptr);
+				m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
+				m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
+				m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
+				graphicDrawer(&m);
+				if (m.isSave == 0)
+				{
+					mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
+					mlx_loop(m.w.mlx_ptr);
+				}
 			}
 		}
 		else

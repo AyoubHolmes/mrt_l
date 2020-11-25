@@ -79,6 +79,8 @@ double equationSquare(t_ray R, t_objects *obj,double *distance)
 	return -1;
 }
 
+
+
 t_passage_cy equationCylinder(t_ray R, t_objects *obj,double *distance)
 {
 	t_Cylinder *cy;

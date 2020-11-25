@@ -70,7 +70,7 @@ int shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color)
 			t = interShadowFuncs(t_shadow, p, lights);
 			if (t >= 0 && shadow_checker(t_shadow) == 1)
 			{
-				shadowColor = multiple(0.5, multiple((double)1 / 255, t_shadow->color_shadow));
+				shadowColor = multiple(0.5, multiple((double)1 / 255, /* t_shadow->color_shadow */(t_vector){0, 0, 0}));
 				return (rgb_maker(color_clamping(shadowColor)));
 			}
 		}
