@@ -6,11 +6,12 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 09:47:37 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/25 14:36:27 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:46:10 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
 
 t_camera		icam(t_vector *vecs, double fov, \
 					int xresolution, int yresolution)
@@ -24,7 +25,7 @@ t_camera		icam(t_vector *vecs, double fov, \
 	calc.half_height = tan(calc.theta / 2);
 	calc.half_width = calc.aspect * calc.half_height;
 	cam.origine = vecs[0];
-	calc.w = make_unit_vector(multiple(-1, vecs[1]));
+	calc.w = make_unit_vector(substract(cam.origine, vecs[1]));
 	calc.u = make_unit_vector(v_product(calc.w, calc.up));
 	calc.v = v_product(calc.w, calc.u);
 	calc.v1 = substract(cam.origine, multiple(calc.half_width, calc.u));

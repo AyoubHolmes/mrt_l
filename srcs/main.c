@@ -6,7 +6,7 @@
 /*   By: aboulbaz <aboulbaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 09:57:49 by aboulbaz          #+#    #+#             */
-/*   Updated: 2020/11/25 14:32:12 by aboulbaz         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:54:10 by aboulbaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,15 @@ t_data parse(char **argv, t_main *m, int ac)
 	return (d);
 }
 
+t_Resolution resize(t_Resolution R, int a, int b)
+{
+	if ((R.x <= 0 || R.x >= a))
+		R.x = a;
+	if ((R.y <= 0 || R.y >= b))
+		R.y = b;
+	return (R);
+}
+
 int			main(int argc, char **argv)
 {
 	t_main	m;
@@ -164,24 +173,21 @@ int			main(int argc, char **argv)
 
 	m.w.mlx_ptr = mlx_init();
 	mlx_get_screen_size(m.w.mlx_ptr, &a, &b);
-	
 	if (argc == 2 || argc == 3 )
 	{
 		err = file_checker(argv[1]);
 		if (err.isChecked == 1)
 		{
 			m.d = parse(argv, &m, argc);
-			if ((m.d.R.x >= 0 && m.d.R.x <= a)&& (m.d.R.y >= 0 && m.d.R.y <= b))
+			m.d.R = resize(m.d.R, a, b);
+			m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
+			m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
+			m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
+			graphicDrawer(&m);
+			if (m.isSave == 0)
 			{
-				m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
-				m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
-				m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
-				graphicDrawer(&m);
-				if (m.isSave == 0)
-				{
-					mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
-					mlx_loop(m.w.mlx_ptr);
-				}
+				mlx_hook(m.w.win_ptr, 2, 0, key_press, &m);
+				mlx_loop(m.w.mlx_ptr);
 			}
 		}
 		else
