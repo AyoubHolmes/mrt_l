@@ -53,15 +53,23 @@ double equationSquare(t_ray R, t_objects *obj,double *distance)
 {
 	t_Square *sq = ((t_Square*)obj->content);
 	t_vector oc = substract(R.A, sq->square_center);
-	double x = scalar(R.B, make_unit_vector(sq->square_norm));
-	double y = scalar(oc, make_unit_vector(sq->square_norm));
+	sq->square_norm = make_unit_vector(sq->square_norm);
+	double x = scalar(R.B, (sq->square_norm));
+	double y = scalar(oc, (sq->square_norm));
 	double t;
-	if (fabs(x) > 0)
+	double	u_distance;
+    double	v_distance;
+	t_vector u;
+	t_vector v;
+	if (x != 0)
 	{
 		t = -y / x;
-		t_vector v = line_point(R, t);
-		oc = substract(sq->square_center, v);
-		if (fabs(oc.x)<= (double)(sq->size / 2) && fabs(oc.y)<= (double)(sq->size / 2) && fabs(oc.z)<= (double)(sq->size / 2)&& t <= *distance && t > 0)
+		oc = substract(line_point(R, t), sq->square_center);
+		u = (v_product((t_vector){0, 1, 0}, make_unit_vector(sq->square_norm)));
+		v = (v_product(make_unit_vector(sq->square_norm), u));
+		u_distance = (double)(scalar(oc, u) / (double)(sq->size / 2));
+		v_distance = (double)(scalar(oc, v) / (double)(sq->size / 2));	
+		if (fabs(u_distance) <= 1 && fabs(v_distance) <= 1 && t <= *distance && t >= 0)
 		{
 			if (R.id == 0)
 				*distance = t;
@@ -102,26 +110,27 @@ t_passage_cy equationCylinder(t_ray R, t_objects *obj,double *distance)
 		t2 = (-b + sqrt(des)) / (2 * a); 
 		m1 = scalar(R.B, cy->cylinder_norm) * t1 + scalar(oc, cy->cylinder_norm);
 		m2 = scalar(R.B, cy->cylinder_norm) * t2 + scalar(oc, cy->cylinder_norm);
-		if (m1 >= (double)(-1 * cy->cylinder_height / 2) && m1 \
-			<= (double)(cy->cylinder_height / 2))
-			m2 = m1;
-		if(t1 < t2)
-			t2 = t1;
-		if (t2 != 0)
+		if(m1 >= 0 && m1 <= (double)(cy->cylinder_height))
 		{
-			if (m2 >= (double)(-1 * cy->cylinder_height / 2) && m2 <= (double)(cy->cylinder_height / 2))
-			{
+			t2 = t1;
+			m2 = m1;
+		}
+		if (t2 > 0 && (m2 >= 0 && m2 <= (double)(cy->cylinder_height)))
+		{
 				if (t2 <= *distance && t2 >= 0)
 				{
 					pass.t = t2;
 					if (R.id == 0)
 						*distance = t2;
-					pass.N = substract(substract(line_point(R, t1), cy->cylinder_center), \
+					pass.N = substract(substract(line_point(R, t2), cy->cylinder_center), \
 							multiple(m2, cy->cylinder_norm));
+						/* if(scalar(R.B,pass.N)>=0)
+								pass.N = multiple(-1 ,pass.N); */
 					pass.N = make_unit_vector(pass.N);
+					
 				}
 			}
-		}
+		
 	}
 	return pass;
 }

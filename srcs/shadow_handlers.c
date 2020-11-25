@@ -9,9 +9,9 @@ int			shadow_checker(t_p_shadow *t_shadow)
 
 	A = length(substract(t_shadow->light_pos, t_shadow->newStart));
 	B = length(substract(t_shadow->pos_hit, t_shadow->newStart));
-	v1 = t_shadow->cam_dir;
-	v2 = substract(t_shadow->pos_hit, t_shadow->light_pos);
-	if (scalar(v1, v2) > 0 && A >= B)
+	v1 = make_unit_vector(t_shadow->cam_dir);
+	v2 = make_unit_vector(substract(t_shadow->pos_hit, t_shadow->light_pos));
+	if (scalar(v1, v2) >= 0.01 && A >= B)
 			return (1);
 	return (0);
 }
@@ -48,7 +48,7 @@ double		interShadowFuncs(t_p_shadow  *t_shadow, t_objects *p, t_objects *lights)
 			t = equationTriangle(r, p,&t_shadow->d_shadow);
 		if (t > 0)
 		{
-			t_shadow->pos_hit = (line_point(r, t));
+			t_shadow->pos_hit = line_point(r, t);
 			return (t);
 		}
 		l = l->next;
@@ -63,7 +63,6 @@ int shadowHandler(t_p_shadow *t_shadow, t_objects *lights, int color)
 	double	t;
 
 	p = t_shadow->obj;
-	t_shadow->d_shadow = INT_MAX;
 	while (p != NULL)
 	{
 		if (p != t_shadow->p)
