@@ -56,6 +56,22 @@ void    errorPrinterHelper2(int id)
         ft_putstr_fd("Triangle has wrong number of values\n", 2);
     else if (id == -19)
         ft_putstr_fd("Triangle has a wrong entry\n", 2);
+    else if(id == -20)
+        ft_putstr_fd("File not found\n", 2);
+    else if(id == -21)
+        ft_putstr_fd("Wrong number of inputs\n", 2);
+    else if(id == -22)
+        ft_putstr_fd("Do you mean \"--save\"?\n", 2);
+    else if(id == -23)
+        ft_putstr_fd("Resolutuion doesn't exist\n", 2);
+    else if(id == -24)
+        ft_putstr_fd("Ambient doesn't exist\n", 2);
+    else if(id == -25)
+        ft_putstr_fd("Camera doesn't exist\n", 2);
+     else if(id == -26)
+        ft_putstr_fd("Multiple Resolutions\n", 2);
+    else if(id == -27)
+        ft_putstr_fd("Multiple Ambient\n", 2);
 }
 
 void errorPrinter(t_err err)
@@ -65,7 +81,11 @@ void errorPrinter(t_err err)
         errorPrinterHelper1(err.isChecked);
     else
         errorPrinterHelper2(err.isChecked);
-    ft_putstr_fd(" at line: ", 2);
-    ft_putnbr_fd(err.line, 2);
+    if (err.line != -1)
+    {
+        ft_putstr_fd(" at line: ", 2);
+        ft_putnbr_fd(err.line, 2);
+        ft_putstr_fd("\n", 2);
+    }
     exit (1);
 }

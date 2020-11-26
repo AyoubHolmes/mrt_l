@@ -42,28 +42,33 @@ void rotate(t_data *D, char **data)
 	t_vector rotVec;
 	char **values;
 
-	values = ft_split(data[1], ',');
-	rotVec = (t_vector){atof(values[0]), atof(values[1]), \
-	atof(values[2])};
-	if (D->last_obj->id == 2)
+	if (D->last_obj == NULL)
+		ft_putstr_fd("WARNING: Wrong rotation\n", 2);
+	else
 	{
-		((t_Cam_data*)D->last_obj->content)->cam_normal = rotatevect(\
-		((t_Cam_data*)D->last_obj->content)->cam_normal, rotVec);
-	}
-	else if (D->last_obj->id == 5)
-	{
-		((t_Plane*)D->last_obj->content)->plane_norm = rotatevect(\
-		((t_Plane*)D->last_obj->content)->plane_norm, rotVec);
-	}
-	else if (D->last_obj->id == 6)
-	{
-		((t_Square*)D->last_obj->content)->square_norm = rotatevect(\
-		((t_Square*)D->last_obj->content)->square_norm, rotVec);
-	}
-	else if (D->last_obj->id == 7)
-	{
-		((t_Cylinder*)D->last_obj->content)->cylinder_norm = rotatevect(\
-		((t_Cylinder*)D->last_obj->content)->cylinder_norm, rotVec);
+		values = ft_split(data[1], ',');
+		rotVec = (t_vector){atof(values[0]), atof(values[1]), \
+		atof(values[2])};
+		if (D->last_obj->id == 2)
+		{
+			((t_Cam_data*)D->last_obj->content)->cam_normal = rotatevect(\
+			((t_Cam_data*)D->last_obj->content)->cam_normal, rotVec);
+		}
+		else if (D->last_obj->id == 5)
+		{
+			((t_Plane*)D->last_obj->content)->plane_norm = rotatevect(\
+			((t_Plane*)D->last_obj->content)->plane_norm, rotVec);
+		}
+		else if (D->last_obj->id == 6)
+		{
+			((t_Square*)D->last_obj->content)->square_norm = rotatevect(\
+			((t_Square*)D->last_obj->content)->square_norm, rotVec);
+		}
+		else if (D->last_obj->id == 7)
+		{
+			((t_Cylinder*)D->last_obj->content)->cylinder_norm = rotatevect(\
+			((t_Cylinder*)D->last_obj->content)->cylinder_norm, rotVec);
+		}
 	}
 }
 
@@ -80,27 +85,32 @@ void translate(t_data *D, char **data)
 	t_vector tVec;
 	char **values;
 
-	values = ft_split(data[1], ',');
-	tVec = (t_vector){atof(values[0]), atof(values[1]), \
-	atof(values[2])};
-	if (D->last_obj->id == 2)
+	if (D->last_obj == NULL)
+		ft_putstr_fd("WARNING: Wrong translation\n", 2);
+	else
 	{
-		((t_Cam_data*)D->last_obj->content)->view_point = transvect(\
-		((t_Cam_data*)D->last_obj->content)->view_point, tVec);
-	}
-	else if (D->last_obj->id == 5)
-	{
-		((t_Plane*)D->last_obj->content)->plane_center = transvect(\
-		((t_Plane*)D->last_obj->content)->plane_center, tVec);
-	}
-	else if (D->last_obj->id == 6)
-	{
-		((t_Square*)D->last_obj->content)->square_center = transvect(\
-		((t_Square*)D->last_obj->content)->square_center, tVec);
-	}
-	else if (D->last_obj->id == 7)
-	{
-		((t_Cylinder*)D->last_obj->content)->cylinder_center = transvect(\
-		((t_Cylinder*)D->last_obj->content)->cylinder_center, tVec);
+		values = ft_split(data[1], ',');
+		tVec = (t_vector){atof(values[0]), atof(values[1]), \
+		atof(values[2])};
+		if (D->last_obj->id == 2)
+		{
+			((t_Cam_data*)D->last_obj->content)->view_point = transvect(\
+			((t_Cam_data*)D->last_obj->content)->view_point, tVec);
+		}
+		else if (D->last_obj->id == 5)
+		{
+			((t_Plane*)D->last_obj->content)->plane_center = transvect(\
+			((t_Plane*)D->last_obj->content)->plane_center, tVec);
+		}
+		else if (D->last_obj->id == 6)
+		{
+			((t_Square*)D->last_obj->content)->square_center = transvect(\
+			((t_Square*)D->last_obj->content)->square_center, tVec);
+		}
+		else if (D->last_obj->id == 7)
+		{
+			((t_Cylinder*)D->last_obj->content)->cylinder_center = transvect(\
+			((t_Cylinder*)D->last_obj->content)->cylinder_center, tVec);
+		}
 	}
 }

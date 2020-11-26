@@ -5,6 +5,7 @@ void R_insertion(t_data *D, char **data)
     D->R.x = atoi(data[1]);
     D->R.y = atoi(data[2]);
     D->R.done = 1;
+    D->last_obj = NULL;
 }
 
 void A_insertion(t_data *D, char **data)
@@ -14,6 +15,7 @@ void A_insertion(t_data *D, char **data)
     ambient_color = ft_split(data[2], ',');
     D->A.t_ambient_color = (t_vector){ strtof(ambient_color[0], NULL)\
         , strtof(ambient_color[1], NULL), strtof(ambient_color[2], NULL) };
+    D->last_obj = NULL;
 }
 
 void c_insertion(t_data *D, char **data)

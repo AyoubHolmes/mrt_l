@@ -34,32 +34,20 @@ FUNCTIONS = ./srcs/camera.c \
 			./parsing/parser_functions.c
 
 FUNCTIONS_O = $(FUNCTIONS:.c=.o)
-MLX_MMS = ./minilibx_mms_20200219
-MLX_OGL = ./minilibx_opengl_20191021
 
 HEADERS = ./includes/
 
 CC = gcc -I ${HEADERS}
 
 $(NAME): $(HEADERS) $(FUNCTIONS_O)
-	@make -sC $(MLX_MMS)
-	@make -sC $(MLX_OGL)
-	@cp ./minilibx_mms_20200219/libmlx.dylib .
 	@ar rc $(NAME) ${FUNCTIONS_O}
-	@gcc $(FLAGS)  -I /usr/local/include -L ./minilibx_opengl_20191021 libmlx.dylib -lmlx -framework OpenGl -framework AppKit  miniRT.a -o MiniRT
 	@clear
 all: $(NAME)
-
 
 clean:
 	@rm -rf ./parsing/*.o
 	@rm -rf ./srcs/*.o
-	@rm libmlx.dylib
-	@make clean -sC $(MLX_MMS)
-	@make clean -sC $(MLX_OGL)
 
 fclean: clean
 	@rm -rf $(NAME)
-	@rm miniRT
-
 re: fclean all

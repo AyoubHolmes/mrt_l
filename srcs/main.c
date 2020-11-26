@@ -39,33 +39,93 @@ t_objects *getLigths(t_objects *obj)
 	return (lst);
 }
 
+int *t_filler()
+{
+	int *t;
+
+	t = (int*)malloc(sizeof(int) * 4);
+	t[0] = 0;
+	t[1] = 0;
+	t[2] = 0;
+	t[4] = 0;
+	return (t);
+}
+
+void check_t(int *t)
+{
+	t_err err;
+
+	err.line = -1;
+	if(t[0] == 0)
+	{
+		err.isChecked = -23;
+		errorPrinter(err);
+	}
+	if(t[1] == 0)
+	{
+		err.isChecked = -24;
+		errorPrinter(err);
+	}
+	if(t[2] == 0)
+	{
+		err.isChecked = -25;
+		errorPrinter(err);
+	}
+	if(t[0] > 1)
+	{
+		err.isChecked = -26;
+		errorPrinter(err);
+	}
+	if(t[1] > 1)
+	{
+		err.isChecked = -27;
+		errorPrinter(err);
+	}
+	if(t[3] == 0)
+		ft_putstr_fd("WARNING: No Lights\n", 2);
+}
+
 t_err		file_checker(char *file)
 {
     int		isChecked;
+	int		*t;
     char	*line;
     int		fd;
     int		rest;
 	t_err	err;
 
     fd = open(file, O_RDONLY);
+	t = t_filler();
     rest = 1;
 	err.line = 0;
-    while(rest == 1)
+	err.isChecked = -20;
+	while(rest == 1)
     {
         rest = get_next_line(fd, &line);
+		if (rest < 0)
+		{
+			err.line = -1;
+			free(t);
+			errorPrinter(err);
+		}
         if (line[0] == '\0')
 		{
 			free(line);
             continue;
 		}
 		err.line++;
-		err.isChecked = data_checker(line);
+		err.isChecked = data_checker(line, t);
 		if (err.isChecked != 1)
+		{
+			free(t);
 			return (err);
+		}
 		free(line);
     }
     close(fd);
+	check_t(t);
 	err.isChecked = 1;
+	free(t);
     return (err);
 }
 
@@ -80,6 +140,7 @@ t_data		file_parser(char *file)
 	d.obj = NULL;
     fd = open(file, O_RDONLY);
     rest = 1;
+	d.last_obj = NULL;
     while(rest == 1)
     {
         rest = get_next_line(fd, &line);
@@ -111,6 +172,7 @@ void		graphicDrawer(t_main *m)
 		i = m->d.R.x - 1;
 		while (i >= 0)
 		{
+			
 			u[0] = (double)i / (double)m->d.R.x;
 			u[1] = (double)j / (double)m->d.R.y;
 			t_ray r = get_t_ray(m->d, u[0], u[1]);
@@ -147,21 +209,16 @@ t_data parse(char **argv, t_main *m, int ac)
 	t_data d;
 
 	m->isSave = 0;
+	
 	d = file_parser(argv[1]);
+	
 	if (ac == 3 && ft_strncmp(argv[2], "--save", 6) == 0)
 		m->isSave = 1;
+	
 	d.cameras = getcams(d);
 	d.lights = getLigths(d.obj);
+	
 	return (d);
-}
-
-t_Resolution resize(t_Resolution R, int a, int b)
-{
-	if ((R.x <= 0 || R.x >= a))
-		R.x = a;
-	if ((R.y <= 0 || R.y >= b))
-		R.y = b;
-	return (R);
 }
 
 int			main(int argc, char **argv)
@@ -171,15 +228,15 @@ int			main(int argc, char **argv)
 	int	a;
 	int b;
 
-	m.w.mlx_ptr = mlx_init();
-	mlx_get_screen_size(m.w.mlx_ptr, &a, &b);
-	if (argc == 2 || argc == 3 )
+	err.line = -1;
+	if (argc == 2 || (argc == 3 && ft_strncmp(argv[2], "--save", 6) == 0))
 	{
 		err = file_checker(argv[1]);
 		if (err.isChecked == 1)
 		{
+
 			m.d = parse(argv, &m, argc);
-			m.d.R = resize(m.d.R, a, b);
+			m.w.mlx_ptr = mlx_init();
 			m.w.win_ptr = mlx_new_window(m.w.mlx_ptr,m.d.R.x,m.d.R.y,"miniRT");
 			m.w.img_ptr = mlx_new_image(m.w.mlx_ptr,m.d.R.x,m.d.R.y);
 			m.w.img_data = (int *)mlx_get_data_addr(m.w.img_ptr, &m.w.bpp, &m.w.size_l, &m.w.img_endian);
@@ -192,6 +249,16 @@ int			main(int argc, char **argv)
 		}
 		else
 			errorPrinter(err);
+	}
+	else if ((argc == 3 && ft_strncmp(argv[2], "--save", 6) != 0) )
+	{
+		err.isChecked = -22;
+		errorPrinter(err);
+	}
+	else
+	{
+		err.isChecked = -21;
+		errorPrinter(err);
 	}
 	return (0);
 }

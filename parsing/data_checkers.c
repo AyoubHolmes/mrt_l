@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-int				r_checker(char *line)
+int				r_checker(char *line, int *t)
 {
 	int			i;
 	char		**data;
@@ -22,14 +22,17 @@ int				r_checker(char *line)
 	{
 		data = ft_split_whitespaces(line);
 		if (ft_isint(data[1]) && ft_isint(data[1]))
+		{
+			*t += 1;
 			return (1);
+		}
 		else
 			return (-3);
 	}
 	return (-2);
 }
 
-int				a_checker(char *line)
+int				a_checker(char *line, int *t)
 {
 	int			i;
 	char		**data;
@@ -40,14 +43,17 @@ int				a_checker(char *line)
 		data = ft_split_whitespaces(line);
 		if (ft_isintensityfloat(data[1]) && \
 			ft_isvector(data[2], ft_iscolorfloat))
+		{
+			*t += 1;
 			return (1);
+		}
 		else
 			return (-5);
 	}
 	return (-4);
 }
 
-int				c_checker(char *line)
+int				c_checker(char *line, int *t)
 {
 	int			i;
 	char		**data;
@@ -58,14 +64,17 @@ int				c_checker(char *line)
 		data = ft_split_whitespaces(line);
 		if (ft_isvector(data[1], ft_isfloat) && \
 			ft_isvector(data[2], ft_isfloat) && ft_ispositiveint(data[3]))
+		{
+			*t += 1;
 			return (1);
+		}
 		else
 			return (-7);
 	}
 	return (-6);
 }
 
-int				l_checker(char *line)
+int				l_checker(char *line, int *t)
 {
 	int			i;
 	char		**data;
@@ -77,7 +86,10 @@ int				l_checker(char *line)
 		if (ft_isvector(data[1], ft_isfloat) && \
 			ft_isintensityfloat(data[2]) && \
 			ft_isvector(data[3], ft_iscolorfloat))
-			return (1);
+			{
+				*t = 1;
+				return (1);
+			}
 		else
 			return (-9);
 	}

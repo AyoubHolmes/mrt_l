@@ -59,9 +59,7 @@ void	data_insertion(t_data *D, char **data)
 
 	i = data_id(data);
 	if (i == -4)
-	{
 		rotate(D, data);
-	}
 	if (i == -3)
 		translate(D, data);
 	if (i == 0)

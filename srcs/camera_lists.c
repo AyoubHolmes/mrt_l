@@ -12,6 +12,8 @@
 
 #include "miniRT.h"
 
+// gcc *.c  -L /usr/X11/include ../MLX/minilibx/libmlx.a -lXext -lX11 -lm 
+
 void			getcamhelper(t_data d, t_objects **obj, t_camlist **liste)
 {
 	*obj = d.obj;

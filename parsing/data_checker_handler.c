@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-int			data_checker_helper1(char *line, int i)
+int			data_checker_helper1(char *line, int i, int *t)
 {
 	if (i == -4)
 		return (1);
@@ -21,13 +21,13 @@ int			data_checker_helper1(char *line, int i)
 	if (i == -2)
 		return (1);
 	if (i == 0)
-		return (r_checker(line));
+		return (r_checker(line, &t[0]));
 	else if (i == 1)
-		return (a_checker(line));
+		return (a_checker(line, &t[1]));
 	else if (i == 2)
-		return (c_checker(line));
+		return (c_checker(line, &t[2]));
 	else if (i == 3)
-		return (l_checker(line));
+		return (l_checker(line, &t[3]));
 	return (-1);
 }
 
@@ -46,7 +46,7 @@ int			data_checker_helper2(char *line, int i)
 	return (-1);
 }
 
-int			data_checker(char *line)
+int			data_checker(char *line, int *t)
 {
 	int		i;
 	char	**data;
@@ -54,7 +54,7 @@ int			data_checker(char *line)
 	data = ft_split_whitespaces(line);
 	i = data_id(data);
 	if (i <= 3)
-		return (data_checker_helper1(line, i));
+		return (data_checker_helper1(line, i, t));
 	else
 		return (data_checker_helper2(line, i));
 	return (-1);
